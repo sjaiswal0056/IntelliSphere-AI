@@ -1,0 +1,84 @@
+{
+  "model_name": "Hybrid Collaborative & Matrix Factorization Recommender",
+  "dataset": "GroupLens MovieLens Latest Small",
+  "total_users": 610,
+  "total_items": 9724,
+  "total_ratings": 100836,
+  "evaluation_metrics": {
+    "precision_at_10": 0.131,
+    "ndcg_at_10": 0.1634,
+    "catalog_coverage": 0.1538
+  },
+  "top_popular_baseline": [
+    {
+      "movieId": 318,
+      "title": "Shawshank Redemption, The (1994)",
+      "genres": "Crime|Drama",
+      "weighted_score": 4.381815774615234,
+      "vote_count": 317
+    },
+    {
+      "movieId": 858,
+      "title": "Godfather, The (1972)",
+      "genres": "Crime|Drama",
+      "weighted_score": 4.2250070273755425,
+      "vote_count": 192
+    },
+    {
+      "movieId": 2959,
+      "title": "Fight Club (1999)",
+      "genres": "Action|Crime|Drama|Thriller",
+      "weighted_score": 4.217133909453143,
+      "vote_count": 218
+    },
+    {
+      "movieId": 260,
+      "title": "Star Wars: Episode IV - A New Hope (1977)",
+      "genres": "Action|Adventure|Sci-Fi",
+      "weighted_score": 4.184800256423464,
+      "vote_count": 251
+    },
+    {
+      "movieId": 50,
+      "title": "Usual Suspects, The (1995)",
+      "genres": "Crime|Mystery|Thriller",
+      "weighted_score": 4.181115243083657,
+      "vote_count": 204
+    },
+    {
+      "movieId": 527,
+      "title": "Schindler's List (1993)",
+      "genres": "Drama|War",
+      "weighted_score": 4.173107462959866,
+      "vote_count": 220
+    },
+    {
+      "movieId": 1221,
+      "title": "Godfather: Part II, The (1974)",
+      "genres": "Crime|Drama",
+      "weighted_score": 4.171414169325263,
+      "vote_count": 129
+    },
+    {
+      "movieId": 58559,
+      "title": "Dark Knight, The (2008)",
+      "genres": "Action|Crime|Drama|IMAX",
+      "weighted_score": 4.162810052539085,
+      "vote_count": 149
+    },
+    {
+      "movieId": 1196,
+      "title": "Star Wars: Episode V - The Empire Strikes Back (1980)",
+      "genres": "Action|Adventure|Sci-Fi",
+      "weighted_score": 4.162396792638107,
+      "vote_count": 211
+    },
+    {
+      "movieId": 1213,
+      "title": "Goodfellas (1990)",
+      "genres": "Crime|Drama",
+      "weighted_score": 4.161024256793625,
+      "vote_count": 126
+    }
+  ]
+}

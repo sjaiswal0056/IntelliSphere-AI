@@ -1,0 +1,6 @@
+transaction_id,amount,customer_age,category,is_churn
+TX-001,45.50,32,Retail,0
+TX-002,120.00,45,Electronics,1
+TX-003,15.20,28,Grocery,0
+TX-004,89.90,52,Retail,0
+TX-005,250.00,39,Electronics,1

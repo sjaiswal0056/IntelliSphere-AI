@@ -1,0 +1,495 @@
+{
+  "model_name": "XGBoost Equipment Failure Classifier",
+  "dataset_total_records": 10000,
+  "total_failures": 339,
+  "failure_mode_breakdown": {
+    "TWF": 46,
+    "HDF": 115,
+    "PWF": 95,
+    "OSF": 98,
+    "RNF": 19
+  },
+  "models_comparison": [
+    {
+      "model": "Logistic Regression (Balanced)",
+      "roc_auc": 0.9391,
+      "pr_auc": 0.4433
+    },
+    {
+      "model": "Random Forest",
+      "roc_auc": 0.9628,
+      "pr_auc": 0.8354
+    },
+    {
+      "model": "XGBoost Classifier (Selected)",
+      "roc_auc": 0.981,
+      "pr_auc": 0.8929,
+      "f1_score": 0.6818,
+      "precision": 0.5556,
+      "recall": 0.8824
+    }
+  ],
+  "confusion_matrix": {
+    "true_negative": 1884,
+    "false_positive": 48,
+    "false_negative": 8,
+    "true_positive": 60
+  },
+  "roc_curve": [
+    {
+      "fpr": 0.0,
+      "tpr": 0.0
+    },
+    {
+      "fpr": 0.0005,
+      "tpr": 0.6912
+    },
+    {
+      "fpr": 0.0062,
+      "tpr": 0.8529
+    },
+    {
+      "fpr": 0.0393,
+      "tpr": 0.9118
+    },
+    {
+      "fpr": 0.0771,
+      "tpr": 0.9412
+    },
+    {
+      "fpr": 0.1429,
+      "tpr": 0.9559
+    },
+    {
+      "fpr": 0.2065,
+      "tpr": 0.9559
+    },
+    {
+      "fpr": 0.2448,
+      "tpr": 0.9706
+    },
+    {
+      "fpr": 0.2883,
+      "tpr": 0.9706
+    },
+    {
+      "fpr": 0.3209,
+      "tpr": 0.9706
+    },
+    {
+      "fpr": 0.369,
+      "tpr": 0.9853
+    },
+    {
+      "fpr": 0.3965,
+      "tpr": 0.9853
+    },
+    {
+      "fpr": 0.4208,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.4462,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.4829,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.4959,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.5202,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.5404,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.5637,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.5818,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.6014,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.6154,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.6351,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.6579,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.6734,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.7019,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.7158,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.7422,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.7805,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.7976,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.8183,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.8344,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.8535,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.869,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.8851,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9032,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9198,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9296,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9431,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9612,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9746,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9881,
+      "tpr": 1.0
+    }
+  ],
+  "pr_curve": [
+    {
+      "recall": 1.0,
+      "precision": 0.034
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0349
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0359
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.037
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0381
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0394
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0405
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0419
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0433
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0447
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0461
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.048
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0498
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0517
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0538
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0563
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0593
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0621
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0653
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0686
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.072
+    },
+    {
+      "recall": 1.0,
+      "precision": 0.0761
+    },
+    {
+      "recall": 0.9853,
+      "precision": 0.0791
+    },
+    {
+      "recall": 0.9853,
+      "precision": 0.0843
+    },
+    {
+      "recall": 0.9853,
+      "precision": 0.0896
+    },
+    {
+      "recall": 0.9706,
+      "precision": 0.0938
+    },
+    {
+      "recall": 0.9706,
+      "precision": 0.1015
+    },
+    {
+      "recall": 0.9706,
+      "precision": 0.1095
+    },
+    {
+      "recall": 0.9706,
+      "precision": 0.1183
+    },
+    {
+      "recall": 0.9706,
+      "precision": 0.1294
+    },
+    {
+      "recall": 0.9559,
+      "precision": 0.1398
+    },
+    {
+      "recall": 0.9559,
+      "precision": 0.1559
+    },
+    {
+      "recall": 0.9559,
+      "precision": 0.1747
+    },
+    {
+      "recall": 0.9559,
+      "precision": 0.2
+    },
+    {
+      "recall": 0.9559,
+      "precision": 0.2321
+    },
+    {
+      "recall": 0.9559,
+      "precision": 0.2754
+    },
+    {
+      "recall": 0.9412,
+      "precision": 0.3368
+    },
+    {
+      "recall": 0.9118,
+      "precision": 0.4247
+    },
+    {
+      "recall": 0.8824,
+      "precision": 0.5882
+    },
+    {
+      "recall": 0.7647,
+      "precision": 0.9123
+    },
+    {
+      "recall": 0.1765,
+      "precision": 1.0
+    }
+  ],
+  "shap_importance": [
+    {
+      "feature": "Tool_wear_min",
+      "mean_abs_shap": 1.0585
+    },
+    {
+      "feature": "Mechanical_Power",
+      "mean_abs_shap": 0.9334
+    },
+    {
+      "feature": "Torque_Speed_Ratio",
+      "mean_abs_shap": 0.8563
+    },
+    {
+      "feature": "Rotational_speed_rpm",
+      "mean_abs_shap": 0.6691
+    },
+    {
+      "feature": "Overstrain_Index",
+      "mean_abs_shap": 0.4939
+    },
+    {
+      "feature": "Temp_Difference",
+      "mean_abs_shap": 0.4803
+    },
+    {
+      "feature": "Air_temperature_K",
+      "mean_abs_shap": 0.1829
+    },
+    {
+      "feature": "Process_temperature_K",
+      "mean_abs_shap": 0.1807
+    },
+    {
+      "feature": "Torque_Nm",
+      "mean_abs_shap": 0.1046
+    },
+    {
+      "feature": "Type_encoded",
+      "mean_abs_shap": 0.0387
+    }
+  ],
+  "sample_fixtures": {
+    "healthy": [
+      {
+        "Type_encoded": 1,
+        "Air_temperature_K": 298.1,
+        "Process_temperature_K": 308.6,
+        "Rotational_speed_rpm": 1551,
+        "Torque_Nm": 42.8,
+        "Tool_wear_min": 0,
+        "Temp_Difference": 10.5,
+        "Mechanical_Power": 6951.59056015735,
+        "Overstrain_Index": 0.0,
+        "Torque_Speed_Ratio": 0.02759509975760735
+      },
+      {
+        "Type_encoded": 0,
+        "Air_temperature_K": 298.2,
+        "Process_temperature_K": 308.7,
+        "Rotational_speed_rpm": 1408,
+        "Torque_Nm": 46.3,
+        "Tool_wear_min": 3,
+        "Temp_Difference": 10.5,
+        "Mechanical_Power": 6826.722724152667,
+        "Overstrain_Index": 138.89999999999998,
+        "Torque_Speed_Ratio": 0.03288352249372498
+      },
+      {
+        "Type_encoded": 0,
+        "Air_temperature_K": 298.1,
+        "Process_temperature_K": 308.5,
+        "Rotational_speed_rpm": 1498,
+        "Torque_Nm": 49.4,
+        "Tool_wear_min": 5,
+        "Temp_Difference": 10.399999999999977,
+        "Mechanical_Power": 7749.387542560967,
+        "Overstrain_Index": 247.0,
+        "Torque_Speed_Ratio": 0.032977302850618805
+      }
+    ],
+    "faulty": [
+      {
+        "Type_encoded": 0,
+        "Air_temperature_K": 298.9,
+        "Process_temperature_K": 309.1,
+        "Rotational_speed_rpm": 2861,
+        "Torque_Nm": 4.6,
+        "Tool_wear_min": 143,
+        "Temp_Difference": 10.200000000000045,
+        "Mechanical_Power": 1378.1748092277942,
+        "Overstrain_Index": 657.8,
+        "Torque_Speed_Ratio": 0.0016078294246493201
+      },
+      {
+        "Type_encoded": 0,
+        "Air_temperature_K": 298.9,
+        "Process_temperature_K": 309.0,
+        "Rotational_speed_rpm": 1410,
+        "Torque_Nm": 65.7,
+        "Tool_wear_min": 191,
+        "Temp_Difference": 10.100000000000023,
+        "Mechanical_Power": 9700.923955019922,
+        "Overstrain_Index": 12548.7,
+        "Torque_Speed_Ratio": 0.04659574435038479
+      },
+      {
+        "Type_encoded": 0,
+        "Air_temperature_K": 298.8,
+        "Process_temperature_K": 308.9,
+        "Rotational_speed_rpm": 1455,
+        "Torque_Nm": 41.3,
+        "Tool_wear_min": 208,
+        "Temp_Difference": 10.099999999999966,
+        "Mechanical_Power": 6292.767164773034,
+        "Overstrain_Index": 8590.4,
+        "Torque_Speed_Ratio": 0.028384879530000826
+      }
+    ]
+  },
+  "limitations_and_disclaimers": "The UCI AI4I 2020 dataset is a synthetic benchmark representing milling machine failures. It does not provide continuous time-series degradation histories; therefore, remaining useful life (RUL) cannot be estimated without dedicated run-to-failure sensory datasets."
+}

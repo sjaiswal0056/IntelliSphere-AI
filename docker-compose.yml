@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # ==============================================================================
+  # Database Service — PostgreSQL 16
+  # ==============================================================================
+  db:
+    image: postgres:16-alpine
+    container_name: intellisphere-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: intellisphere
+      POSTGRES_USER: intellisphere_user
+      POSTGRES_PASSWORD: intellisphere_secure_password_2026!
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U intellisphere_user -d intellisphere"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - intellisphere-network
+
+  # ==============================================================================
+  # Application Service — Unified Predictive Intelligence Platform
+  # ==============================================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intellisphere-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://intellisphere_user:intellisphere_secure_password_2026!@db:5432/intellisphere
+      - SECRET_KEY=intellisphere-ai-super-secret-production-grade-jwt-key-2026
+      - ACCESS_TOKEN_EXPIRE_MINUTES=1440
+      - MLFLOW_TRACKING_URI=sqlite:///./data/mlflow.db
+      - MLFLOW_EXPERIMENT_NAME=IntelliSphere-Unified-Platform
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://localhost:8000
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./data:/app/data
+    networks:
+      - intellisphere-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  intellisphere-network:
+    driver: bridge
