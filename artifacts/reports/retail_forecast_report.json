@@ -1,23 +1,23 @@
 {
   "model_name": "LightGBM Demand Forecaster",
-  "validation_strategy": "Chronological Hold-out (last 28 days)",
+  "validation_strategy": "Chronological Recursive Hold-Out (zero future leakage) & 3-Fold Rolling-Origin Backtest",
   "models_comparison": [
     {
       "model": "Seasonal Naive (7-day lag)",
-      "mae": 15960.39,
-      "wape": 0.285
+      "mae": 15185.35,
+      "wape": 0.2712
     },
     {
       "model": "XGBoost Regressor",
-      "mae": 15755.79,
-      "wape": 0.2814
+      "mae": 15129.32,
+      "wape": 0.2702
     },
     {
       "model": "LightGBM Regressor (Selected)",
-      "mae": 16007.62,
-      "rmse": 32612.27,
-      "wape": 0.2859,
-      "r2": 0.3153
+      "mae": 15837.6,
+      "rmse": 32056.14,
+      "wape": 0.2828,
+      "r2": 0.3384
     }
   ],
   "feature_importance": [
@@ -87,177 +87,177 @@
     {
       "date": "2011-11-15",
       "actual": 60807.29,
-      "predicted": 50795.91,
-      "lower_bound": 37253.97,
-      "upper_bound": 64337.86
+      "predicted": 58622.56,
+      "lower_bound": 45080.61,
+      "upper_bound": 72164.5
     },
     {
       "date": "2011-11-16",
       "actual": 65958.17,
-      "predicted": 51627.96,
-      "lower_bound": 38086.01,
-      "upper_bound": 65169.9
+      "predicted": 59835.74,
+      "lower_bound": 46293.79,
+      "upper_bound": 73377.69
     },
     {
       "date": "2011-11-17",
       "actual": 61103.13,
-      "predicted": 54638.85,
-      "lower_bound": 41096.9,
-      "upper_bound": 68180.79
+      "predicted": 60560.17,
+      "lower_bound": 47018.22,
+      "upper_bound": 74102.12
     },
     {
       "date": "2011-11-18",
       "actual": 51275.39,
-      "predicted": 52405.76,
-      "lower_bound": 38863.81,
-      "upper_bound": 65947.71
+      "predicted": 57959.65,
+      "lower_bound": 44417.7,
+      "upper_bound": 71501.6
     },
     {
       "date": "2011-11-19",
       "actual": 0.0,
-      "predicted": 0.0,
+      "predicted": 4019.01,
       "lower_bound": 0.0,
-      "upper_bound": 13541.95
+      "upper_bound": 17560.96
     },
     {
       "date": "2011-11-20",
       "actual": 35058.57,
-      "predicted": 23139.94,
-      "lower_bound": 9597.99,
-      "upper_bound": 36681.88
+      "predicted": 27277.76,
+      "lower_bound": 13735.81,
+      "upper_bound": 40819.71
     },
     {
       "date": "2011-11-21",
       "actual": 49805.72,
-      "predicted": 52432.54,
-      "lower_bound": 38890.6,
-      "upper_bound": 65974.49
+      "predicted": 60976.05,
+      "lower_bound": 47434.1,
+      "upper_bound": 74517.99
     },
     {
       "date": "2011-11-22",
       "actual": 64089.82,
-      "predicted": 51567.57,
-      "lower_bound": 38025.62,
-      "upper_bound": 65109.52
+      "predicted": 53422.71,
+      "lower_bound": 39880.76,
+      "upper_bound": 66964.65
     },
     {
       "date": "2011-11-23",
       "actual": 80104.18,
-      "predicted": 49908.24,
-      "lower_bound": 36366.3,
-      "upper_bound": 63450.19
+      "predicted": 52075.22,
+      "lower_bound": 38533.27,
+      "upper_bound": 65617.17
     },
     {
       "date": "2011-11-24",
       "actual": 50978.63,
-      "predicted": 50306.65,
-      "lower_bound": 36764.7,
-      "upper_bound": 63848.6
+      "predicted": 51785.77,
+      "lower_bound": 38243.82,
+      "upper_bound": 65327.72
     },
     {
       "date": "2011-11-25",
       "actual": 50822.73,
-      "predicted": 45921.41,
-      "lower_bound": 32379.46,
-      "upper_bound": 59463.36
+      "predicted": 47563.38,
+      "lower_bound": 34021.43,
+      "upper_bound": 61105.33
     },
     {
       "date": "2011-11-26",
       "actual": 0.0,
-      "predicted": 0.0,
+      "predicted": 5210.54,
       "lower_bound": 0.0,
-      "upper_bound": 13541.95
+      "upper_bound": 18752.49
     },
     {
       "date": "2011-11-27",
       "actual": 20611.08,
-      "predicted": 26616.07,
-      "lower_bound": 13074.12,
-      "upper_bound": 40158.02
+      "predicted": 29857.88,
+      "lower_bound": 16315.93,
+      "upper_bound": 43399.82
     },
     {
       "date": "2011-11-28",
       "actual": 57165.19,
-      "predicted": 46775.51,
-      "lower_bound": 33233.56,
-      "upper_bound": 60317.46
+      "predicted": 52681.7,
+      "lower_bound": 39139.76,
+      "upper_bound": 66223.65
     },
     {
       "date": "2011-11-29",
       "actual": 72595.93,
-      "predicted": 49884.89,
-      "lower_bound": 36342.94,
-      "upper_bound": 63426.84
+      "predicted": 48637.83,
+      "lower_bound": 35095.88,
+      "upper_bound": 62179.78
     },
     {
       "date": "2011-11-30",
       "actual": 60126.96,
-      "predicted": 48662.92,
-      "lower_bound": 35120.98,
-      "upper_bound": 62204.87
+      "predicted": 49254.42,
+      "lower_bound": 35712.47,
+      "upper_bound": 62796.37
     },
     {
       "date": "2011-12-01",
       "actual": 52197.25,
-      "predicted": 52979.73,
-      "lower_bound": 39437.79,
-      "upper_bound": 66521.68
+      "predicted": 53435.69,
+      "lower_bound": 39893.75,
+      "upper_bound": 66977.64
     },
     {
       "date": "2011-12-02",
       "actual": 57664.07,
-      "predicted": 51526.8,
-      "lower_bound": 37984.85,
-      "upper_bound": 65068.74
+      "predicted": 51289.82,
+      "lower_bound": 37747.87,
+      "upper_bound": 64831.76
     },
     {
       "date": "2011-12-03",
       "actual": 0.0,
-      "predicted": 0.0,
+      "predicted": 9389.94,
       "lower_bound": 0.0,
-      "upper_bound": 13541.95
+      "upper_bound": 22931.88
     },
     {
       "date": "2011-12-04",
       "actual": 24621.43,
-      "predicted": 29956.12,
-      "lower_bound": 16414.17,
-      "upper_bound": 43498.07
+      "predicted": 31445.17,
+      "lower_bound": 17903.22,
+      "upper_bound": 44987.11
     },
     {
       "date": "2011-12-05",
       "actual": 88741.96,
-      "predicted": 56573.65,
-      "lower_bound": 43031.7,
-      "upper_bound": 70115.6
+      "predicted": 59115.14,
+      "lower_bound": 45573.19,
+      "upper_bound": 72657.09
     },
     {
       "date": "2011-12-06",
       "actual": 56713.21,
-      "predicted": 53337.42,
-      "lower_bound": 39795.47,
-      "upper_bound": 66879.36
+      "predicted": 51105.35,
+      "lower_bound": 37563.41,
+      "upper_bound": 64647.3
     },
     {
       "date": "2011-12-07",
       "actual": 75439.16,
-      "predicted": 53733.79,
-      "lower_bound": 40191.85,
-      "upper_bound": 67275.74
+      "predicted": 53777.36,
+      "lower_bound": 40235.41,
+      "upper_bound": 67319.31
     },
     {
       "date": "2011-12-08",
       "actual": 82495.0,
-      "predicted": 53742.43,
-      "lower_bound": 40200.48,
-      "upper_bound": 67284.37
+      "predicted": 58114.92,
+      "lower_bound": 44572.97,
+      "upper_bound": 71656.87
     },
     {
       "date": "2011-12-09",
       "actual": 200938.6,
-      "predicted": 51214.62,
-      "lower_bound": 37672.67,
-      "upper_bound": 64756.57
+      "predicted": 52517.3,
+      "lower_bound": 38975.36,
+      "upper_bound": 66059.25
     }
   ],
   "future_forecast": [
@@ -430,6 +430,59 @@
       "upper_bound": 49432.77
     }
   ],
+  "rolling_origin_backtest": {
+    "folds": [
+      {
+        "fold": 1,
+        "origin_date": "2011-09-16",
+        "eval_window": "2011-09-17 to 2011-10-14",
+        "train_days": 290,
+        "test_days": 28,
+        "lightgbm_mae": 16141.3,
+        "lightgbm_wape": 0.4135,
+        "xgboost_mae": 16655.24,
+        "xgboost_wape": 0.4266,
+        "naive_mae": 18023.44,
+        "naive_wape": 0.4617
+      },
+      {
+        "fold": 2,
+        "origin_date": "2011-10-14",
+        "eval_window": "2011-10-15 to 2011-11-11",
+        "train_days": 318,
+        "test_days": 28,
+        "lightgbm_mae": 11974.38,
+        "lightgbm_wape": 0.2801,
+        "xgboost_mae": 10304.34,
+        "xgboost_wape": 0.241,
+        "naive_mae": 14433.63,
+        "naive_wape": 0.3376
+      },
+      {
+        "fold": 3,
+        "origin_date": "2011-11-11",
+        "eval_window": "2011-11-12 to 2011-12-09",
+        "train_days": 346,
+        "test_days": 28,
+        "lightgbm_mae": 15419.14,
+        "lightgbm_wape": 0.2754,
+        "xgboost_mae": 15276.8,
+        "xgboost_wape": 0.2728,
+        "naive_mae": 15185.35,
+        "naive_wape": 0.2712
+      }
+    ],
+    "summary": {
+      "folds_evaluated": 3,
+      "horizon_days": 28,
+      "lightgbm_mean_mae": 14511.61,
+      "lightgbm_mean_wape": 0.323,
+      "xgboost_mean_mae": 14078.79,
+      "xgboost_mean_wape": 0.3135,
+      "naive_mean_mae": 15880.81,
+      "naive_mean_wape": 0.3568
+    }
+  },
   "decomposition": {
     "dates": [
       "2011-10-11",

@@ -42,15 +42,19 @@ def score_transaction(req: TransactionPredictRequest, db: Session = Depends(get_
     artifact = joblib.load(model_path)
     xgb_model = artifact["xgb_model"]
     iso_forest = artifact["iso_forest"]
-    scaler = artifact["scaler"]
+    amount_scaler = artifact.get("amount_scaler", artifact.get("scaler"))
+    time_scaler = artifact.get("time_scaler")
     feature_cols = artifact["feature_cols"]
     explainer = artifact["explainer"]
 
     start_time = time.time()
 
-    # Scale amount and time
-    scaled_amount = float(scaler.transform([[req.amount]])[0][0])
-    scaled_time = float(req.time / 100000.0)  # standardized time
+    # Scale amount and time using models fitted strictly on training data
+    scaled_amount = float(amount_scaler.transform([[req.amount]])[0][0])
+    if time_scaler is not None:
+        scaled_time = float(time_scaler.transform([[req.time]])[0][0])
+    else:
+        scaled_time = float(req.time / 100000.0)
 
     # Build input feature vector
     input_dict = {f"V{i}": 0.0 for i in range(1, 29)}

@@ -51,7 +51,7 @@ export const datasetsApi = {
 };
 
 export const retailApi = {
-  getForecast: async (params: { horizon_days: number; store_id?: string; category?: string }) =>
+  getForecast: async (params: { horizon_days: number; scope?: string }) =>
     (await api.post('/retail/forecast', params)).data,
   getSegments: async () => (await api.get('/retail/segments')).data,
   getRepeatPurchase: async () => (await api.get('/retail/repeat-purchase')).data,

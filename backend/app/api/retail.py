@@ -15,9 +15,8 @@ REPORTS_DIR = os.path.join(settings.BASE_DIR, "artifacts", "reports")
 MODELS_DIR = os.path.join(settings.BASE_DIR, "artifacts", "models")
 
 class ForecastRequest(BaseModel):
-    horizon_days: int = Field(28, ge=7, le=28)
-    store_id: Optional[str] = "All Stores"
-    category: Optional[str] = "All Categories"
+    horizon_days: int = Field(28, ge=7, le=28, description="Multi-horizon forecast window in days (7, 14, or 28)")
+    scope: Optional[str] = Field("all_store_demand", description="Forecasting scope: aggregate daily sales across all products and stores")
 
 class InventoryRequest(BaseModel):
     daily_demand_mean: float = Field(24.5, ge=1.0)
@@ -37,11 +36,10 @@ def get_sales_forecast(req: ForecastRequest):
     with open(report_file, "r") as f:
         data = json.load(f)
     
-    # Slice requested horizon
+    # Slice requested multi-step horizon
     data["future_forecast"] = data["future_forecast"][:req.horizon_days]
     data["requested_horizon_days"] = req.horizon_days
-    data["store_filter"] = req.store_id
-    data["category_filter"] = req.category
+    data["scope"] = "Aggregate Store-Wide Demand (UCI Online Retail II)"
     return data
 
 @router.get("/segments")

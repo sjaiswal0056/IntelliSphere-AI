@@ -17,22 +17,23 @@ async def lifespan(app: FastAPI):
     # Initialize DB tables
     init_db()
     
-    # Seed default demo/admin user if not exists
-    db = SessionLocal()
-    try:
-        admin_user = db.query(User).filter(User.email == "demo@intellisphere.ai").first()
-        if not admin_user:
-            admin_user = User(
-                email="demo@intellisphere.ai",
-                hashed_password=hash_password("IntelliSphere2026!"),
-                full_name="Lead AI Scientist",
-                role="admin",
-                is_active=True
-            )
-            db.add(admin_user)
-            db.commit()
-    finally:
-        db.close()
+    # Seed default admin user if configured
+    if settings.SEED_DEMO_ADMIN:
+        db = SessionLocal()
+        try:
+            admin_user = db.query(User).filter(User.email == settings.ADMIN_EMAIL).first()
+            if not admin_user:
+                admin_user = User(
+                    email=settings.ADMIN_EMAIL,
+                    hashed_password=hash_password(settings.ADMIN_PASSWORD),
+                    full_name="Lead AI Scientist",
+                    role="admin",
+                    is_active=True
+                )
+                db.add(admin_user)
+                db.commit()
+        finally:
+            db.close()
     
     yield
 

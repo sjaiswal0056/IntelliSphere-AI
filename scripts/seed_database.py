@@ -12,6 +12,7 @@ if BASE_DIR not in sys.path:
 
 import json
 from datetime import datetime
+from backend.app.core.config import settings
 from backend.app.database.session import SessionLocal, init_db
 from backend.app.models import (
     User, Dataset, DatasetSchema, DatasetProfile,
@@ -32,11 +33,11 @@ def seed():
 
     try:
         # 1. Admin / Lead Data Scientist User
-        user = db.query(User).filter(User.email == "demo@intellisphere.ai").first()
+        user = db.query(User).filter(User.email == settings.ADMIN_EMAIL).first()
         if not user:
             user = User(
-                email="demo@intellisphere.ai",
-                hashed_password=hash_password("IntelliSphere2026!"),
+                email=settings.ADMIN_EMAIL,
+                hashed_password=hash_password(settings.ADMIN_PASSWORD),
                 full_name="Lead AI Scientist",
                 role="admin",
                 is_active=True
@@ -44,7 +45,7 @@ def seed():
             db.add(user)
             db.commit()
             db.refresh(user)
-            print(f"[+] Created demo user: {user.email}")
+            print(f"[+] Created admin user: {user.email}")
 
         # 2. Register Active Trained Models
         models_metadata = [

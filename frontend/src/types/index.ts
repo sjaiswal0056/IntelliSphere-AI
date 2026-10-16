@@ -20,6 +20,16 @@ export interface OverviewMetrics {
     total_predictions: number;
     detected_anomalies: number;
     total_experiments: number;
+    average_latency_ms?: number;
+    mean_validation_auc?: number;
+  };
+  engine_metrics?: Record<string, any>;
+  performance_telemetry?: {
+    mean_auc: number;
+    avg_latency_ms: number;
+    is_demonstration_data: boolean;
+    data_label: string;
+    timeline: Array<{ day: string; accuracy: number; latency: number }>;
   };
   recent_alerts: Array<{
     id: number;

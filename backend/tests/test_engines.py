@@ -1,13 +1,15 @@
 import pytest
 
 def test_retail_forecast_endpoint(client, auth_headers):
-    """Test Retail sales forecast returns genuine LightGBM predictions and intervals."""
+    """Test Retail sales forecast returns genuine LightGBM predictions, rolling-origin backtest, and intervals."""
     response = client.post("/api/retail/forecast", json={"horizon_days": 14}, headers=auth_headers)
     assert response.status_code == 200
     data = response.json()
     assert "models_comparison" in data
     assert "future_forecast" in data
     assert len(data["future_forecast"]) == 14
+    assert "rolling_origin_backtest" in data
+    assert len(data["rolling_origin_backtest"]["folds"]) == 3
     first_pred = data["future_forecast"][0]
     assert "date" in first_pred
     assert "forecast" in first_pred

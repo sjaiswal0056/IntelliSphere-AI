@@ -104,7 +104,10 @@ def start_model_training(req: StartTrainingRequest, db: Session = Depends(get_db
 
 @router.get("/jobs")
 def list_jobs(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    jobs = db.query(TrainingJob).order_by(TrainingJob.created_at.desc()).limit(50).all()
+    query = db.query(TrainingJob)
+    if current_user.role != "admin":
+        query = query.filter(TrainingJob.user_id == current_user.id)
+    jobs = query.order_by(TrainingJob.created_at.desc()).limit(50).all()
     return [
         {
             "id": j.id,
@@ -119,10 +122,12 @@ def list_jobs(db: Session = Depends(get_db), current_user: User = Depends(get_cu
     ]
 
 @router.get("/jobs/{job_id}")
-def get_job_status(job_id: str, db: Session = Depends(get_db)):
+def get_job_status(job_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     job = db.query(TrainingJob).filter(TrainingJob.job_id == job_id).first()
     if not job:
         raise HTTPException(status_code=404, detail="Training job not found")
+    if job.user_id != current_user.id and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Unauthorized access to training job status")
     return {
         "job_id": job.job_id,
         "status": job.status,
@@ -134,10 +139,12 @@ def get_job_status(job_id: str, db: Session = Depends(get_db)):
     }
 
 @router.get("/results/{job_id}")
-def get_job_results(job_id: str, db: Session = Depends(get_db)):
+def get_job_results(job_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     job = db.query(TrainingJob).filter(TrainingJob.job_id == job_id).first()
     if not job:
         raise HTTPException(status_code=404, detail="Training job not found")
+    if job.user_id != current_user.id and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Unauthorized access to training job results")
     if job.status != "completed":
         raise HTTPException(
             status_code=400,

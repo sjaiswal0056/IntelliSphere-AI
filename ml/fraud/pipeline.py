@@ -35,19 +35,33 @@ def train_fraud_models():
     df = pd.read_csv(DATA_PATH)
     print(f"    Loaded {len(df)} transactions. Frauds: {df['Class'].sum()} ({df['Class'].mean()*100:.3f}%)")
 
-    # Feature scaling for Time and Amount
-    scaler = StandardScaler()
-    df["scaled_amount"] = scaler.fit_transform(df["Amount"].values.reshape(-1, 1))
-    df["scaled_time"] = scaler.fit_transform(df["Time"].values.reshape(-1, 1))
-
-    feature_cols = [f"V{i}" for i in range(1, 29)] + ["scaled_amount", "scaled_time"]
-    X = df[feature_cols]
+    # Prepare raw features before split to guarantee zero data leakage from test distribution
+    raw_v_cols = [f"V{i}" for i in range(1, 29)]
+    X_raw = df[raw_v_cols + ["Amount", "Time"]].copy()
     y = df["Class"]
 
-    # Stratified split: 70% train, 30% test (preserving all fraud distribution)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.30, random_state=42, stratify=y
+    # Stratified split: 70% train, 30% test strictly before feature scaling
+    X_train_raw, X_test_raw, y_train, y_test = train_test_split(
+        X_raw, y, test_size=0.30, random_state=42, stratify=y
     )
+
+    # Fit scalers STRICTLY on training split only
+    amount_scaler = StandardScaler()
+    time_scaler = StandardScaler()
+
+    amount_scaler.fit(X_train_raw[["Amount"]])
+    time_scaler.fit(X_train_raw[["Time"]])
+
+    # Apply scaling to train and test splits separately
+    feature_cols = raw_v_cols + ["scaled_amount", "scaled_time"]
+
+    X_train = X_train_raw[raw_v_cols].copy()
+    X_train["scaled_amount"] = amount_scaler.transform(X_train_raw[["Amount"]])
+    X_train["scaled_time"] = time_scaler.transform(X_train_raw[["Time"]])
+
+    X_test = X_test_raw[raw_v_cols].copy()
+    X_test["scaled_amount"] = amount_scaler.transform(X_test_raw[["Amount"]])
+    X_test["scaled_time"] = time_scaler.transform(X_test_raw[["Time"]])
 
     # 1. Baseline: Logistic Regression with balanced class weights
     print("[*] Training Baseline Logistic Regression...")
@@ -124,11 +138,13 @@ def train_fraud_models():
         for feat, val in sorted(zip(feature_cols, mean_abs_shap), key=lambda x: x[1], reverse=True)[:12]
     ]
 
-    # Save model artifacts
+    # Save model artifacts with fitted scalers (trained strictly on X_train)
     joblib.dump({
         "xgb_model": xgb_clf,
         "iso_forest": iso_forest,
-        "scaler": scaler,
+        "amount_scaler": amount_scaler,
+        "time_scaler": time_scaler,
+        "scaler": amount_scaler,  # backward compatibility alias
         "feature_cols": feature_cols,
         "explainer": explainer,
         "metrics": {

@@ -2,7 +2,7 @@
 
 > **"One Platform. Multiple Intelligence Engines. Smarter Decisions."**
 
-[![CI Pipeline](https://github.com/shivam/IntelliSphere-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/shivam/IntelliSphere-AI/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/sjaiswal0056/IntelliSphere-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/sjaiswal0056/IntelliSphere-AI/actions/workflows/ci.yml)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![React 19](https://img.shields.io/badge/React-19.2+-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -10,7 +10,7 @@
 [![LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-FF6F00.svg)](https://langchain-ai.github.io/langgraph/)
 [![MLflow](https://img.shields.io/badge/MLOps-MLflow-0194E2.svg?logo=mlflow&logoColor=white)](https://mlflow.org)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com)
-[![Tests](https://img.shields.io/badge/Tests-22%20Passed%20(100%25)-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-24%20Passed%20(100%25)-brightgreen.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
@@ -244,9 +244,55 @@ The platform is seeded with an administrative Data Scientist account:
 
 ---
 
+## Model Training, Pipelines & Reproducibility Guide
+
+All machine learning models are fully reproducible, deterministic, and trained on public academic datasets. Every pipeline enforces strict random seeds (`random_state=42`) and incorporates zero-leakage preprocessing.
+
+### 1. Unified Training Orchestrator
+
+You can train all intelligence engines end-to-end with a single command:
+
+```bash
+# Train all 5 core engines and generate all evaluation reports
+python scripts/train_all.py --engine all --seed 42
+```
+
+### 2. Individual Engine Training Commands
+
+Each engine can also be trained independently via the orchestrator or its direct pipeline script:
+
+| Intelligence Engine | Direct Pipeline Script | Orchestrator CLI | Artifacts Generated |
+|:---|:---|:---|:---|
+| **Retail Sales Forecasting** | `python ml/retail/forecasting.py` | `python scripts/train_all.py --engine retail` | `retail_forecast_lgb.joblib`<br/>`retail_forecast_report.json` |
+| **Retail Customer Segmentation** | `python ml/retail/segmentation.py` | *(included in retail)* | `retail_segmentation.joblib`<br/>`retail_segmentation_report.json` |
+| **Retail Repeat Purchase** | `python ml/retail/repeat_purchase.py` | *(included in retail)* | `retail_repeat_purchase.joblib`<br/>`retail_repeat_purchase_report.json` |
+| **Financial Fraud Detection** | `python ml/fraud/pipeline.py` | `python scripts/train_all.py --engine fraud` | `fraud_models.joblib`<br/>`fraud_report.json` |
+| **Industrial Maintenance** | `python ml/maintenance/pipeline.py` | `python scripts/train_all.py --engine maintenance` | `maintenance_models.joblib`<br/>`maintenance_report.json` |
+| **Healthcare Risk Analytics** | `python ml/healthcare/pipeline.py` | `python scripts/train_all.py --engine healthcare` | `healthcare_models.joblib`<br/>`healthcare_report.json` |
+| **Recommendation Engine** | `python ml/recommendations/pipeline.py` | `python scripts/train_all.py --engine recs` | `recommendation_models.joblib`<br/>`recommendations_report.json` |
+
+### 3. Data Leakage Prevention & Methodological Rigor
+
+Each pipeline has been designed to satisfy rigorous production and academic standards:
+
+- **Financial Fraud Scaler Fitting**: Feature scaling (`amount_scaler`, `time_scaler`) is strictly fitted on `X_train_raw` **after** stratified train/test splitting (`stratify=y`). Zero validation distribution information leaks into the training pipeline.
+- **Retail Multi-Step Recursive Forecasting**: Multi-horizon evaluations (7-day, 14-day, 28-day) compute lag and rolling window features for future steps **strictly from prior recursive model predictions**, never from actual future target values. Models are validated via 3-fold expanding window rolling-origin backtesting.
+- **Customer Repeat-Purchase Windowing**: Behavioral features are calculated over a strictly bounded 180-day historical observation window, predicting transactions in a subsequent 90-day outcome window with zero temporal leakage.
+- **Predictive Maintenance Feature Physics**: Mechanical power $(2\pi \cdot \text{RPM} \cdot \text{Torque} / 60)$, thermal gradients $(\text{Process Temp} - \text{Air Temp})$, and overstrain indices are engineered directly from sensor physics. Explicit warnings disclose that the AI4I dataset lacks continuous run-to-failure histories required for longitudinal Remaining Useful Life (RUL) estimation.
+- **Healthcare Probability Calibration**: 5-bin reliability diagram analysis confirms low calibration error (Brier score: 0.1182). Prominent clinical non-diagnosis disclaimers safeguard against misinterpreting statistical risk scores as medical prescriptions.
+- **Recommendation Evaluation**: Evaluated using Precision@10, NDCG@10, and Catalog Coverage against a Bayesian popularity cold-start baseline.
+
+### 4. Artifact & Report Locations
+
+- Compressed Model Binaries: `artifacts/models/*.joblib`
+- Evaluation Audit Reports: `artifacts/reports/*.json`
+- MLOps Experiment Tracking: `data/mlflow.db`
+
+---
+
 ## Running Automated Verification Tests
 
-Execute the comprehensive 22-test backend verification suite covering authentication, profiling, all 5 core engines, security guardrails, and platform status:
+Execute the comprehensive 24-test backend verification suite covering authentication, ownership enforcement, schema profiling, all 5 core engines, AutoDS failure routing, security guardrails, and platform status:
 
 ```bash
 pytest backend/tests -v
@@ -254,7 +300,7 @@ pytest backend/tests -v
 
 **Expected output:**
 ```
-======================= 22 passed in 2.58s =======================
+======================= 24 passed, 55 warnings in 3.14s =======================
 ```
 
 To build and verify the frontend TypeScript bundle:

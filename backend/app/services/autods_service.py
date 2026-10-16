@@ -35,9 +35,11 @@ def run_autods_pipeline_background(job_id: str, dataset_path: str, target_column
             # Execute LangGraph
             output_state = autods_graph.invoke(initial_state)
 
-            if output_state.get("status") == "failed":
+            if output_state.get("status") == "failed" or output_state.get("error_message"):
                 job.status = "failed"
                 job.error_message = output_state.get("error_message", "Execution error in AutoDS graph.")
+                job.status_message = f"Failed: {job.error_message}"
+                job.result_summary = json.dumps(output_state.get("final_report", {"error": job.error_message}))
                 db.commit()
                 return
 

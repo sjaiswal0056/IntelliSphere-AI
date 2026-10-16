@@ -23,7 +23,26 @@ def inspect_dataset_node(state: AutoDSState) -> Dict[str, Any]:
     except Exception as e:
         return {"status": "failed", "error_message": f"Inspection failed: {str(e)}"}
 
+def error_handler_node(state: AutoDSState) -> Dict[str, Any]:
+    """Captures failure at any stage, stops downstream execution, and formats a diagnostic report."""
+    err = state.get("error_message", "AutoDS pipeline execution failed.")
+    return {
+        "status": "failed",
+        "error_message": err,
+        "final_report": {
+            "status": "failed",
+            "error_message": err,
+            "failed_stage": state.get("status", "failed"),
+            "target_column": state.get("target_column"),
+            "inspection": state.get("inspection_results", {}),
+            "eda": state.get("eda_summary", {})
+        }
+    }
+
 def clean_data_planner_node(state: AutoDSState) -> Dict[str, Any]:
+    if state.get("status") == "failed" or state.get("error_message"):
+        return state
+
     insp = state.get("inspection_results", {})
     plan = {
         "missing_strategy": "Impute numeric columns with median; impute categorical columns with mode.",
@@ -34,9 +53,11 @@ def clean_data_planner_node(state: AutoDSState) -> Dict[str, Any]:
     return {"cleaning_plan": plan}
 
 def eda_node(state: AutoDSState) -> Dict[str, Any]:
+    if state.get("status") == "failed" or state.get("error_message"):
+        return state
+
     try:
         summary = compute_eda_summary(state["dataset_path"])
-        # Recommend visualizations based on column types
         insp = state.get("inspection_results", {})
         num_cols = insp.get("numeric_columns", [])
         
@@ -63,9 +84,12 @@ def eda_node(state: AutoDSState) -> Dict[str, Any]:
         summary["recommended_visualizations"] = recommended_charts
         return {"eda_summary": summary}
     except Exception as e:
-        return {"eda_summary": {}, "error_message": f"EDA failed: {str(e)}"}
+        return {"status": "failed", "error_message": f"EDA failed: {str(e)}"}
 
 def feature_engineering_node(state: AutoDSState) -> Dict[str, Any]:
+    if state.get("status") == "failed" or state.get("error_message"):
+        return state
+
     plan = {
         "numeric_transformations": ["StandardScaler (Z-Score normalization)", "Median Imputation"],
         "categorical_transformations": ["One-Hot Encoding (pd.get_dummies)", "Mode Imputation"],
@@ -74,6 +98,9 @@ def feature_engineering_node(state: AutoDSState) -> Dict[str, Any]:
     return {"feature_plan": plan}
 
 def model_selection_node(state: AutoDSState) -> Dict[str, Any]:
+    if state.get("status") == "failed" or state.get("error_message"):
+        return state
+
     task = state.get("task_type", "classification")
     if task == "classification":
         candidates = ["Logistic Regression (Baseline)", "Random Forest Classifier", "LightGBM Classifier"]
@@ -82,10 +109,13 @@ def model_selection_node(state: AutoDSState) -> Dict[str, Any]:
     return {"model_candidates": candidates}
 
 def train_and_evaluate_node(state: AutoDSState) -> Dict[str, Any]:
-    # Check if user approval was granted before training
+    if state.get("status") == "failed" or state.get("error_message"):
+        return state
+
     if not state.get("user_approval_granted", False):
         return {
-            "status": "awaiting_user_approval",
+            "status": "failed",
+            "error_message": "Training blocked: Explicit user approval was not granted.",
             "evaluation_results": None
         }
 
@@ -103,6 +133,9 @@ def train_and_evaluate_node(state: AutoDSState) -> Dict[str, Any]:
         return {"status": "failed", "error_message": f"Training failed: {str(e)}"}
 
 def explainability_node(state: AutoDSState) -> Dict[str, Any]:
+    if state.get("status") == "failed" or state.get("error_message"):
+        return state
+
     eval_res = state.get("evaluation_results")
     if not eval_res:
         return {"explainability": None}
@@ -121,6 +154,9 @@ def explainability_node(state: AutoDSState) -> Dict[str, Any]:
     }
 
 def reporting_node(state: AutoDSState) -> Dict[str, Any]:
+    if state.get("status") == "failed" or state.get("error_message"):
+        return error_handler_node(state)
+
     eval_res = state.get("evaluation_results")
     insp = state.get("inspection_results", {})
     eda = state.get("eda_summary", {})
@@ -133,7 +169,7 @@ def reporting_node(state: AutoDSState) -> Dict[str, Any]:
             "best_model": expl.get("best_model") if expl else None,
             "dataset_rows": insp.get("row_count"),
             "dataset_columns": insp.get("col_count"),
-            "status": state.get("status")
+            "status": "completed"
         },
         "inspection": insp,
         "eda": eda,
